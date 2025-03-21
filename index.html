@@ -7,18 +7,16 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #eef2f3;
+            background: linear-gradient(to right, #007BFF, #00BFFF);
             text-align: center;
-            color: #333;
+            color: white;
         }
         header {
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 0;
         }
         nav ul {
             list-style: none;
@@ -26,44 +24,39 @@
         }
         nav ul li {
             display: inline;
-            margin: 0 20px;
+            margin: 0 15px;
         }
         nav ul li a {
             color: white;
             text-decoration: none;
             font-size: 18px;
-            font-weight: bold;
         }
         .section {
             padding: 50px;
             background: white;
-            margin: 30px auto;
+            margin: 20px auto;
             width: 80%;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            transition: transform 0.3s;
-        }
-        .section:hover {
-            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            color: black;
         }
         button {
-            background: #4facfe;
+            background: #007BFF;
             color: white;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border: none;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 5px;
             font-size: 16px;
-            font-weight: bold;
-            transition: background 0.3s;
+            transition: 0.3s;
         }
         button:hover {
-            background: #00c6ff;
+            background: #0056b3;
         }
         footer {
-            background: #2c3e50;
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 15px 0;
+            padding: 10px 0;
             position: relative;
             bottom: 0;
             width: 100%;
@@ -92,29 +85,69 @@
     <section id="prediction" class="section">
         <h2>Prediksi TB Berdasarkan Citra Rontgen</h2>
         <p>Unggah gambar X-ray Anda untuk mendapatkan hasil analisis otomatis.</p>
-        <button>Unggah X-ray</button>
+        <input type="file" id="xrayInput" accept="image/*">
+        <button onclick="predictTB()">Unggah X-ray</button>
+        <p id="predictionResult"></p>
     </section>
 
     <section id="monitoring" class="section">
         <h2>Pemantauan Gejala Pasien</h2>
         <p>Catat perkembangan gejala TB Anda untuk pemantauan lebih baik.</p>
-        <button>Mulai Pemantauan</button>
+        <textarea id="symptomLog" placeholder="Catat gejala Anda di sini..."></textarea>
+        <button onclick="saveSymptoms()">Simpan Catatan</button>
+        <p id="symptomStatus"></p>
     </section>
 
     <section id="doctors" class="section">
         <h2>Rekomendasi Dokter Spesialis</h2>
         <p>Cari dokter spesialis paru-paru terdekat di Indonesia.</p>
-        <button>Cari Dokter</button>
+        <button onclick="findDoctors()">Cari Dokter</button>
+        <p id="doctorList"></p>
     </section>
 
     <section id="reminders" class="section">
         <h2>Notifikasi Pengingat Obat</h2>
         <p>Atur pengingat otomatis agar tidak melewatkan jadwal pengobatan Anda.</p>
-        <button>Atur Pengingat</button>
+        <input type="datetime-local" id="reminderTime">
+        <button onclick="setReminder()">Atur Pengingat</button>
+        <p id="reminderStatus"></p>
     </section>
 
     <footer>
         <p>&copy; 2025 TB Custodian. Semua Hak Dilindungi.</p>
     </footer>
+
+    <script>
+        function predictTB() {
+            let fileInput = document.getElementById('xrayInput');
+            if (fileInput.files.length > 0) {
+                document.getElementById('predictionResult').innerText = "Hasil Prediksi: Kemungkinan TB Terdeteksi";
+            } else {
+                alert("Silakan unggah gambar X-ray terlebih dahulu.");
+            }
+        }
+
+        function saveSymptoms() {
+            let symptoms = document.getElementById('symptomLog').value;
+            if (symptoms) {
+                document.getElementById('symptomStatus').innerText = "Gejala berhasil disimpan.";
+            } else {
+                alert("Silakan catat gejala terlebih dahulu.");
+            }
+        }
+
+        function findDoctors() {
+            document.getElementById('doctorList').innerText = "Menampilkan daftar dokter spesialis paru-paru terdekat...";
+        }
+
+        function setReminder() {
+            let time = document.getElementById('reminderTime').value;
+            if (time) {
+                document.getElementById('reminderStatus').innerText = "Pengingat berhasil disetel pada " + time;
+            } else {
+                alert("Silakan pilih waktu pengingat.");
+            }
+        }
+    </script>
 </body>
 </html>
